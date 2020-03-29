@@ -1,18 +1,18 @@
 #!/bin/bash
 
 ################################################################################
-#                          Embedded Development Packages                       #
-#                                Installer Script                              #
+#                          Embedded Development Environment                    #
+#                                Setup Script                                  #
 #                                                                              #
 #  Use this script to rapidly deploy basic and desired embedded development    #
-#  packages.								       #
-#  Last revision: 29/03/2020						       #
-#									       #
+#  packages.								                                   #
+#  Last revision: 29/03/2020						                           #
+#									                                           #
 ################################################################################
-#									       #
-#  Copyright (C) 2020, Radu Daia, Maze Electronics		   	       #
-#  Contact: radu.daia93@gmail.com				   	       #
-#                     						   	       #
+#									                                           #
+#  Copyright (C) 2020, Radu Daia, Maze Electronics		   	                   #
+#  Contact: radu.daia93@gmail.com				   	                           #
+#                     						   	                               #
 #  This program is free software; you can redistribute it and/or modify        #
 #  it under the terms of the GNU General Public License as published by        #
 #  the Free Software Foundation; either version 2 of the License, or           #
