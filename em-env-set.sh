@@ -45,15 +45,34 @@ IntelPackages="\
 
 MakePackages="\
 	make \
-	cmake\
+	cmake \
 	"
 
 EditorPackages="\
 	vim \
-	sublime-text\
+	sublime-text \
 	"
 
-TerminalPackages="terminator"
+TerminalPackages="\
+	terminator \
+	"
+
+# Essential packages for Yocto, as instructed here:
+# https://www.yoctoproject.org/docs/2.0/yocto-project-qs/yocto-project-qs.html
+YoctoPackages="\
+	gawk \
+	wget \
+        git-core \
+       	diffstat \
+	unzip \
+	texinfo \
+	gcc-multilib \
+	build-essential \
+	chrpath \
+	socat \
+	libsdl1.2-dev \
+	xterm \
+	"
 
 SourceControlPackages="\
 	git \
@@ -69,6 +88,7 @@ EmbeddedBasicPackages="\
 	$MakePackages \
 	$EditorPackages \
 	$TerminalPackages \
+	$YoctoPackages \
 	$SourceControlPackages \
 	$ExtraDebugPackages \
 	"
