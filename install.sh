@@ -18,7 +18,20 @@ RECIPES_LIST="\
 PACKAGES_LIST=""
 for recipe in ${RECIPES_LIST}
 do
-	. ./${RECIPES_DIR}/${recipe}/${recipe}.sh
+	# source recipes
+	. ./${RECIPES_DIR}/${recipe}/recipe
+
+	exceptions_list_name="${recipe^^}_EXCEPTIONS"
+	exceptions_list=${!exceptions_list_name}
+	exceptions_count=$(echo "${exceptions_list}" | wc -w)
+
+	# if packages that need special installation steps
+	# are required, then source file with routines to
+	# handle them
+	if [ $exceptions_count -gt 0 ]; then
+		. ./${RECIPES_DIR}/${recipe}/routines
+	fi
+
 	recipe_val=${recipe^^}
 	PACKAGES_LIST="${PACKAGES_LIST} ${!recipe_val}"
 done

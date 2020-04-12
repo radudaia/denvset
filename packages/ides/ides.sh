@@ -4,3 +4,6 @@
 IDES="\
 	pycharm-community \
 	"
+IDES_EXCEPTIONS="\
+	pycharm-community \
+	"
