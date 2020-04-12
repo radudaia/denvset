@@ -21,7 +21,7 @@ do
 	# source recipes
 	. ./${RECIPES_DIR}/${recipe}/recipe
 
-	exceptions_list_name="${recipe^^}_EXCEPTIONS"
+	exceptions_list_name="EXCEPTION_${recipe^^}"
 	exceptions_list=${!exceptions_list_name}
 	exceptions_count=$(echo "${exceptions_list}" | wc -w)
 
@@ -30,19 +30,41 @@ do
 	# handle them
 	if [ $exceptions_count -gt 0 ]; then
 		. ./${RECIPES_DIR}/${recipe}/routines
+		echo "Sourced routines for ${recipe}"
 	fi
 
 	recipe_val=${recipe^^}
-	PACKAGES_LIST="${PACKAGES_LIST} ${!recipe_val}"
+	recipe_base_packages="BASE_${recipe_val}"
+	recipe_exception_packages="EXCEPTION_${recipe_val}"
+	#echo "${!recipe_val}"
+	#echo "recipe_base_packages=${!recipe_base_packages}"
+	for package in ${!recipe_val}
+	do
+		if [[ ${!recipe_base_packages} == *"${package}"*  ]]; then
+			BASE_PACKAGES="${BASE_PACKAGES} ${package}"
+			#echo "${package} added in BASE"
+		else
+			EXCEPTION_PACKAGES="${EXCEPTION_PACKAGES} ${package}"
+			#echo "${package} added in EXCEPTION"
+		fi
+	done
 done
 
-echo ${PACKAGES_LIST}
+#echo ${BASE_PACKAGES}
+#echo "================="
+#echo ${EXCEPTION_PACKAGES}
 
 sudo apt-get update
 
-for package in ${PACKAGES_LIST}
+# install the trivial packages
+#for package in ${BASE_PACKAGES}
+#do
+#	sudo apt-get -y install ${package} 2>&1 > /dev/null
+#done
+
+# install the more difficult packages
+for package in ${EXCEPTION_PACKAGES}
 do
-	sudo apt-get -y install ${package} 2>&1 > /dev/null
+	echo "Preparing to install ${package}"
+	install_${package}
 done
-
-

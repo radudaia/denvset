@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # terminal
-TERMINALS="\
+BASE_TERMINALS="\
 	terminator \
 	"
+
+EXCEPTION_TERMINALS=""
+
+TERMINALS="${BASE_TERMINALS} ${EXCEPTION_TERMINALS}"

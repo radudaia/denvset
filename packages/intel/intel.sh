@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # x86 development tools
-INTEL="\
+BASE_INTEL="\
 	gcc \
 	g++ \
 	"
+
+EXCEPTION_INTEL=""
+
+INTEL="${BASE_INTEL} ${EXCEPTION_INTEL}"

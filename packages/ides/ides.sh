@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # IDEs used for development
-IDES="\
+BASE_IDES=""
+
+EXCEPTION_IDES="\
 	pycharm-community \
 	"
-IDES_EXCEPTIONS="\
-	pycharm-community \
-	"
+
+IDES="${BASE_IDES} ${EXCEPTION_IDES}"
