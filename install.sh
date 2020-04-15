@@ -1,5 +1,30 @@
 #!/bin/bash
 
+################################################################################
+#                          Embedded Development Environment                    #
+#                                Setup Script                                  #
+#                                                                              #
+#  Use this script to rapidly deploy basic and desired embedded development    #
+#  packages.								                                   #
+#  Last revision: 15/04/2020						                           #
+#									                                           #
+################################################################################
+#									                                           #
+#  Copyright (C) 2020, Radu Daia, Maze Electronics		   	                   #
+#  Contact: radu.daia93@gmail.com				   	                           #
+#                     						   	                               #
+#  This program is free software; you can redistribute it and/or modify        #
+#  it under the terms of the GNU General Public License as published by        #
+#  the Free Software Foundation; either version 2 of the License, or           #
+#  (at your option) any later version.                                         #
+#                                                                              #
+#  This program is distributed in the hope that it will be useful,             #
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of              #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               #
+#  GNU General Public License for more details.                                #
+#                                                                              #
+################################################################################
+
 RECIPES_DIR="packages"
 
 RECIPES_LIST="\
@@ -30,7 +55,7 @@ do
 	# handle them
 	if [ $exceptions_count -gt 0 ]; then
 		. ./${RECIPES_DIR}/${recipe}/routines
-		echo "Sourced routines for ${recipe}"
+		#echo "Sourced routines for ${recipe}"
 	fi
 
 	recipe_val=${recipe^^}
@@ -50,17 +75,13 @@ do
 	done
 done
 
-#echo ${BASE_PACKAGES}
-#echo "================="
-#echo ${EXCEPTION_PACKAGES}
-
 sudo apt-get update
 
 # install the trivial packages
-#for package in ${BASE_PACKAGES}
-#do
-#	sudo apt-get -y install ${package} 2>&1 > /dev/null
-#done
+for package in ${BASE_PACKAGES}
+do
+	sudo apt-get -y install ${package} 2>&1 > /dev/null
+done
 
 # install the more difficult packages
 for package in ${EXCEPTION_PACKAGES}
