@@ -5,14 +5,14 @@
 #                                Setup Script                                  #
 #                                                                              #
 #  Use this script to rapidly deploy basic and desired embedded development    #
-#  packages.								                                   #
-#  Last revision: 15/04/2020						                           #
-#									                                           #
+#  packages.								       #
+#  Last revision: 15/04/2020						       #
+#									       #
 ################################################################################
-#									                                           #
-#  Copyright (C) 2020, Radu Daia, Maze Electronics		   	                   #
-#  Contact: radu.daia93@gmail.com				   	                           #
-#                     						   	                               #
+#									       #
+#  Copyright (C) 2020, Radu Daia, Maze Electronics		   	       #
+#  Contact: radu.daia93@gmail.com				   	       #
+#                     						   	       #
 #  This program is free software; you can redistribute it and/or modify        #
 #  it under the terms of the GNU General Public License as published by        #
 #  the Free Software Foundation; either version 2 of the License, or           #
@@ -25,7 +25,7 @@
 #                                                                              #
 ################################################################################
 
-RECIPES_DIR="packages"
+RECIPES_DIR="recipes"
 
 RECIPES_LIST="\
 	arm \
@@ -40,6 +40,11 @@ RECIPES_LIST="\
 	yocto \
 	"
 
+. ./utils.sh
+
+
+printf "${cyn}[INFO]${end} ${mag}DEnvSet is starting up!${end}\n"
+printf "${cyn}[INFO]${end} ${mag}Parsing recipes...${end}"
 PACKAGES_LIST=""
 for recipe in ${RECIPES_LIST}
 do
@@ -55,37 +60,45 @@ do
 	# handle them
 	if [ $exceptions_count -gt 0 ]; then
 		. ./${RECIPES_DIR}/${recipe}/routines
-		#echo "Sourced routines for ${recipe}"
 	fi
 
 	recipe_val=${recipe^^}
 	recipe_base_packages="BASE_${recipe_val}"
 	recipe_exception_packages="EXCEPTION_${recipe_val}"
-	#echo "${!recipe_val}"
-	#echo "recipe_base_packages=${!recipe_base_packages}"
 	for package in ${!recipe_val}
 	do
 		if [[ ${!recipe_base_packages} == *"${package}"*  ]]; then
 			BASE_PACKAGES="${BASE_PACKAGES} ${package}"
-			#echo "${package} added in BASE"
 		else
 			EXCEPTION_PACKAGES="${EXCEPTION_PACKAGES} ${package}"
-			#echo "${package} added in EXCEPTION"
 		fi
 	done
 done
+printf "${grn}[DONE]${end}\n"
 
-sudo apt-get update
+printf "${cyn}[INFO]${end} ${mag}Updating aptitude package manager.....${end}"
+sudo apt-get update 2>&1 > /dev/null
+printf "${grn}[DONE]${end}\n"
 
+
+line="..............................."
+arrow="|---->"
+printf "${cyn}[INFO]${end} ${blu}Installing package(s):${end}\n"
 # install the trivial packages
 for package in ${BASE_PACKAGES}
 do
+	printf "${cyn}[INFO]${end} ${blu}${arrow}${end} ${yel}${package}${end}${line:${#package}}"
 	sudo apt-get -y install ${package} 2>&1 > /dev/null
+	printf "${grn}[DONE]${end}\n"
 done
 
 # install the more difficult packages
 for package in ${EXCEPTION_PACKAGES}
 do
-	echo "Preparing to install ${package}"
+	printf "${cyn}[INFO]${end} ${blu}${arrow}${end} ${yel}${package}${end}${line:${#package}}"
 	install_${package}
+	printf "${grn}[DONE]${end}\n"
 done
+printf "${cyn}[INFO]${end} ${blu}All packages installed!${end}\n"
+
+echo "${cyn}[INFO]${end} ${mag}System setup finished successfully!${end}"

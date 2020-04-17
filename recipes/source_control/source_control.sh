@@ -3,7 +3,7 @@
 # version control systems
 BASE_SOURCE_CONTROL="\
 	git \
-	svn \
+	subversion \
 	"
 
 EXCEPTION_SOURCE_CONTROL=""
