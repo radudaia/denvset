@@ -3,6 +3,8 @@
 # Text editors
 BASE_EDITORS="\
 	vim \
+	emacs \
+	nano \
 	"
 
 EXCEPTION_EDITORS="\
