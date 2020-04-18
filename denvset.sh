@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ################################################################################
-#                          Embedded Development Environment                    #
-#                                Setup Script                                  #
+#                          Development Environment Setup                       #
+#                                   Framework                                  #
 #                                                                              #
 #  Use this script to rapidly deploy basic and desired embedded development    #
 #  packages.								       #
