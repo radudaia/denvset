@@ -1,6 +1,6 @@
-# EmEnvSet - Embedded Environment Setup System
+# DEnvSet - Development ENVironment SETup Framework
 
-Simple script for setting up an embedded development environment on a freshly-installed Linux system
+Simple framework for setting up a development environment on a freshly-installed Linux system
 
 ## Getting Started
 
@@ -14,9 +14,9 @@ Simple script for setting up an embedded development environment on a freshly-in
 
 ```bash
 
-chmod +x em-env-set.sh
+chmod +x denvset.sh
 
-./em-env-set.sh
+./denvset.sh
 ```
 ## License
 This program is free software; you can redistribute it and/or modify 
