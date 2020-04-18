@@ -83,13 +83,21 @@ printf "${grn}[DONE]${end}\n"
 
 line="..............................."
 arrow="|---->"
+
+PACKAGES="${BASE_PACKAGES} ${EXCEPTION_PACKAGES}"
+
+packages_count=$(echo "${PACKAGES}" | wc -w)
+current_progress=0
+progress_step=$(echo "scale=2; 100/${packages_count}" | bc)
+
 printf "${cyn}[INFO]${end} ${blu}Installing package(s):${end}\n"
 # install the trivial packages
 for package in ${BASE_PACKAGES}
 do
 	printf "${cyn}[INFO]${end} ${blu}${arrow}${end} ${yel}${package}${end}${line:${#package}}"
 	sudo apt-get -y install ${package} 2>&1 > /dev/null
-	printf "${grn}[DONE]${end}\n"
+	current_progress=$(echo "scale=2; ${current_progress} + ${progress_step}" | bc)
+	printf "${grn}[DONE]${end}${red}[${current_progress}%%]${end}\n"
 done
 
 # install the more difficult packages
@@ -97,8 +105,11 @@ for package in ${EXCEPTION_PACKAGES}
 do
 	printf "${cyn}[INFO]${end} ${blu}${arrow}${end} ${yel}${package}${end}${line:${#package}}"
 	install_${package}
-	printf "${grn}[DONE]${end}\n"
+	current_progress=$(echo "scale=2; ${current_progress} + ${progress_step}" | bc)
+	printf "${grn}[DONE]${end}${red}[${current_progress}%%]${end}\n"
 done
-printf "${cyn}[INFO]${end} ${blu}All packages installed!${end}\n"
+
+success_message="All packages installed!"
+printf "${cyn}[INFO]${end} ${blu}\\----- ${success_message}${end}${line:${#success_message}}${red}      [100.0%%]${end}\n"
 
 echo "${cyn}[INFO]${end} ${mag}System setup finished successfully!${end}"
